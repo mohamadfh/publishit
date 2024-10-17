@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status ,generics
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from .models import Article, Rating
 from .serializers import ArticleSerializer, UserRegistrationSerializer , RatingSerializer
@@ -40,7 +41,7 @@ class RatingViewSet(viewsets.ModelViewSet):
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
-
+    permission_classes = (AllowAny,)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
