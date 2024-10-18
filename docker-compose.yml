@@ -18,5 +18,11 @@ services:
       - POSTGRES_USER=sample_user
       - POSTGRES_PASSWORD=sample_pass
       - POSTGRES_DB=sample_db
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
 volumes:
   postgres_data:
