@@ -14,7 +14,7 @@ LOGIN_URL = f"{BASE_URL}/api-token-auth/"
 # Number of users and articles
 NUM_USERS = 500000
 NUM_ARTICLES = 20
-MAX_WORKERS = 20  # Adjust the number of parallel threads
+MAX_WORKERS = 100  # Adjust the number of parallel threads
 PROGRESS_PRINT_STEP = 1000  # Print progress every n steps
 
 # Generate a random username
