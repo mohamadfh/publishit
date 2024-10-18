@@ -17,4 +17,8 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . .
 
-#CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# Expose the port
+EXPOSE 8000
+
+# Run Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application", "--workers", "3","--timeout","120"]
