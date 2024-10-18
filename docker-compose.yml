@@ -3,10 +3,12 @@ services:
     build: ./publishit_api
     ports:
       - 8000:8000
-    command: sh -c "python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8000 config.wsgi:application --workers 3 --timeout 120"
+    command: sh -c "python manage.py collectstatic && python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8000 config.wsgi:application --workers 3 --timeout 120"
     restart: always
     env_file:
       - ./.env.sample
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
     depends_on:
       - db
 
@@ -18,5 +20,14 @@ services:
       - POSTGRES_USER=sample_user
       - POSTGRES_PASSWORD=sample_pass
       - POSTGRES_DB=sample_db
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - static_volume:/staticfiles
+    depends_on:
+      - web
 volumes:
   postgres_data:
+  static_volume:
