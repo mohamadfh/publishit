@@ -11,18 +11,18 @@ class ArticleUser(HttpUser):
     @task(20)
     def get_articles(self):
         """Fetch articles using a random user token"""
-        token = 'a9a7c094043b64d4d604a693e95fbfa68b64ac10'
+        token = 'be60a940bbf8d62be50ac7910824fd40e84c6ecc'
         headers = {"Authorization": f"Token {token}"}
-        self.client.get("/articles/", headers=headers, name="/articles/")
+        self.client.get("api/articles/", headers=headers, name="api/articles/")
         time.sleep(1)
 
     @task(1)
     def rate_article(self):
         """Rate an article using a random user token"""
-        token = 'a9a7c094043b64d4d604a693e95fbfa68b64ac10'
+        token = 'be60a940bbf8d62be50ac7910824fd40e84c6ecc'
         headers = {"Authorization": f"Token {token}"}
         rating_payload = {
             "rating": 4
         }
-        self.client.post("/articles/1/rate/", json=rating_payload, headers=headers, name="/articles/1/rate/")
+        self.client.post("api/articles/1/rate/", json=rating_payload, headers=headers, name="api/articles/1/rate/")
         time.sleep(1)

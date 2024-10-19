@@ -24,7 +24,7 @@ class Command(BaseCommand):
 
         # Step 2: Create 1,000,000 users and 5 ratings per user
         user_batch_size = 10000  # Create users in batches
-        total_users = 1000000
+        total_users = 100000
         ratings_per_user = 5
 
         for i in range(0, total_users, user_batch_size):
