@@ -12,10 +12,10 @@ RATINGS_URL = f"{BASE_URL}/ratings/"
 LOGIN_URL = f"{BASE_URL}/api-token-auth/"
 
 # Number of users and articles
-NUM_USERS = 500000
+NUM_USERS = 50
 NUM_ARTICLES = 20
-MAX_WORKERS = 100  # Adjust the number of parallel threads
-PROGRESS_PRINT_STEP = 1000  # Print progress every n steps
+MAX_WORKERS = 10  # Adjust the number of parallel threads
+PROGRESS_PRINT_STEP = 10  # Print progress every n steps
 
 # Generate a random username
 def generate_username():
