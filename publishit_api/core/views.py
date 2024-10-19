@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from .models import Article, Rating
 from .serializers import ArticleSerializer, UserRegistrationSerializer , RatingSerializer
 from django.contrib.auth.models import User
+from rest_framework.views import APIView
+from django.http import Http404
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
@@ -12,31 +14,26 @@ class ArticleViewSet(viewsets.ModelViewSet):
     def get_serializer_context(self):
         return {'request': self.request}
 
-class RatingViewSet(viewsets.ModelViewSet):
-    queryset = Rating.objects.all()
-    serializer_class = RatingSerializer
 
-    def get_serializer_context(self):
-        """
-        Pass the request context to the serializer to access the current user.
-        """
-        return {'request': self.request}
+class RatingAPIView(APIView):
 
-    def create(self, request, *args, **kwargs):
+    def post(self, request, pk):
         """
-        Override the create method to handle the user context without requiring
-        it in the request body.
+        Create or update the rating for a specific article.
         """
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        try:
+            article = Article.objects.get(pk=pk)
+        except Article.DoesNotExist:
+            raise Http404("Article not found.")
 
-    def perform_create(self, serializer):
-        """
-        Save the serializer with the current user.
-        """
-        serializer.save(user=self.request.user)  # Automatically attach the authenticated user
+        data = {'article': article.id, 'rating': request.data.get('rating')}
+        serializer = RatingSerializer(data=data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()

@@ -30,31 +30,37 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+from django.db.models import Avg, Count
+
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = ['id', 'article', 'rating']
 
     def validate_rating(self, value):
-        """
-        Ensure the rating is between 0 and 5.
-        """
         if value < 0 or value > 5:
             raise serializers.ValidationError("Rating must be between 0 and 5.")
         return value
 
     def create(self, validated_data):
-        """
-        Create or update a rating.
-        """
         article = validated_data.get('article')
         user = self.context['request'].user
         rating_value = validated_data.get('rating')
 
+        # Create or update the rating
         rating, created = Rating.objects.update_or_create(
             article=article,
             user=user,
             defaults={'rating': rating_value}
         )
 
+        # Recalculate the article's average rating and rating count
+        self.update_article_rating(article)
+
         return rating
+
+    def update_article_rating(self, article):
+        ratings = Rating.objects.filter(article=article)
+        article.average_rating = ratings.aggregate(Avg('rating'))['rating__avg'] or 0
+        article.rating_count = ratings.aggregate(Count('id'))['id__count']
+        article.save()
