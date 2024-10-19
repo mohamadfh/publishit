@@ -1,11 +1,8 @@
 import time
 from locust import HttpUser, task, between
-from random import choice
 
 class ArticleUser(HttpUser):
     wait_time = between(1, 5)
-
-
 
     def on_start(self):
         """Executed when a simulated user starts."""
@@ -16,7 +13,7 @@ class ArticleUser(HttpUser):
         """Fetch articles using a random user token"""
         token = 'a9a7c094043b64d4d604a693e95fbfa68b64ac10'
         headers = {"Authorization": f"Token {token}"}
-        self.client.get("/api/articles/", headers=headers, name="/api/articles/")
+        self.client.get("/articles/", headers=headers, name="/articles/")
         time.sleep(1)
 
     @task(1)
@@ -25,8 +22,7 @@ class ArticleUser(HttpUser):
         token = 'a9a7c094043b64d4d604a693e95fbfa68b64ac10'
         headers = {"Authorization": f"Token {token}"}
         rating_payload = {
-            "article": 1,  # Adjust to actual article ID
             "rating": 4
         }
-        self.client.post("/api/ratings/", json=rating_payload, headers=headers, name="/api/ratings/")
+        self.client.post("/articles/1/rate/", json=rating_payload, headers=headers, name="/articles/1/rate/")
         time.sleep(1)
