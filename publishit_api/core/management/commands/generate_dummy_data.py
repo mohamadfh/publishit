@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from core.models import Article, Rating
 import random
+from django.db.models import Avg, Count
 
 class Command(BaseCommand):
     help = 'Generate dummy data for Article, Rating, and User models'
@@ -55,6 +56,14 @@ class Command(BaseCommand):
                         rating=rating_value
                     )
                     ratings.append(rating)
+
+                    # Update article's average rating and rating count
+                    article.rating_count += 1
+                    article.average_rating = (
+                        (article.average_rating * (article.rating_count - 1) + rating_value)
+                        / article.rating_count
+                    )
+                    article.save()
 
             # Bulk create ratings to save time
             Rating.objects.bulk_create(ratings)
