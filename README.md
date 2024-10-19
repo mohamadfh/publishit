@@ -24,3 +24,15 @@ To set a baseline for comparison, I implemented a simple and inefficient solutio
 I used this naive approach as a baseline for comparison with more optimized solutions. The purpose was to understand how bad performance could be if no optimizations were applied, and then measure the improvements from more efficient approaches, such as caching counts or using database-level optimizations (e.g., indexed columns, materialized views).
 
 By comparing the baseline performance with more optimal solutions, I could better understand the impact of improvements and how much faster the system could become when handling a large number of users and ratings.
+### results
+
+After generating 100000 users and 500000 ratings in the database, I used locust to perform load test on my api. Here is the result for 200 active users making requests:
+
+![result 200 local](https://github.com/mohamadfh/publishit/blob/main/reports/200%20local.png?raw=true)
+
+Here is the result for 500 active users making requests:
+
+![result 500 local](https://github.com/mohamadfh/publishit/blob/main/reports/500%20local.png?raw=true)
+
+![result 500 local](https://github.com/mohamadfh/publishit/blob/main/reports/500%20local%20chart.png?raw=true)
+
