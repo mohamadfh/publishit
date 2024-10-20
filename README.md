@@ -36,3 +36,35 @@ Here is the result for 500 active users making requests:
 
 ![result 500 local](https://github.com/mohamadfh/publishit/blob/main/reports/500%20local%20chart.png?raw=true)
 
+### Caching Solution
+
+To make API more efficient and scalable, we can reduce the number of queries by denormalizing some of the data and storing the rating count and average rating directly in the Article model. This way, we update these fields only when a new rating is added or an existing one is modified, rather than recalculating them every time an article is displayed.
+
+### results
+
+After generating 100000 users and 500000 ratings in the database, I used locust to perform load test on my api. Here is the result for 200 active users making requests:
+
+![result 200 local](https://github.com/mohamadfh/publishit/blob/main/reports/rep_2_200.png?raw=true)
+
+![result 200 local](https://github.com/mohamadfh/publishit/blob/main/reports/rep_2_200_chart.png?raw=true)
+
+
+Here is the result for 500 active users making requests:
+
+![result 200 local](https://github.com/mohamadfh/publishit/blob/main/reports/rep_2_500.png?raw=true)
+
+![result 200 local](https://github.com/mohamadfh/publishit/blob/main/reports/rep_2_500_chart.png?raw=true)
+
+We can see that performance improved alot.
+
+### similiar problems
+
+The book Designing Data-Intensive Applications by Martin Kleppmann explain this challenge in detail:
+
+The problem described here is similar to Twitter's scalability challenges, where the system's bottleneck was not due to the number of tweets but the "fan-out" effect—each tweet needed to be delivered to thousands or millions of followers in real-time. Initially, Twitter used an approach where each user's timeline was dynamically built by fetching all relevant tweets when requested. This led to performance issues as the number of reads (home timeline views) was significantly higher than writes (new tweets). To solve this, Twitter switched to a model where tweets were pre-emptively fanned out and written to each follower's timeline cache, which made reading timelines faster but added complexity at write time due to the wide variation in follower counts. In a similar way, handling article ratings in a system with millions of ratings per second poses a challenge, as querying and calculating real-time ratings on every request becomes inefficient at scale. Like Twitter, an efficient solution would involve reducing the work done at read time by pre-aggregating or caching data.
+
+![result 200 local](https://github.com/mohamadfh/publishit/blob/main/reports/twitter_issue.png?raw=true)
+
+### other possible approaches
+
+To update the average_rating and rating_count fields at intervals instead of each time a rating is submitted, you can use a scheduled background task to perform batch updates. but the downside is ratings are not always up-to-date.
