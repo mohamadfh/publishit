@@ -112,10 +112,10 @@ To update the average_rating and rating_count fields at intervals instead of eac
 
 Using the **median** as a measure of central tendency can help mitigate the influence of outliers in ratings since it focuses on the middle value rather than being skewed by extreme high or low values. This is particularly useful when a few ratings deviate significantly from the majority.
 
-### Z-score filtering
+#### Z-score filtering
 
 For **Z-score filtering**, calculate the mean and standard deviation of the ratings. Then, use the Z-score to identify ratings that are far from the mean (outliers), and apply a threshold (e.g., only consider ratings within 2 or 3 standard deviations from the mean). Outliers can either be excluded or down-weighted, allowing for a more accurate and fair average rating calculation. Combining median and Z-score filtering ensures a robust approach to handling rating manipulations.
 
-### machine learning methods for anomaly detection 
+#### machine learning methods for anomaly detection 
 
 Performance is key for our system because we need to handle many ratings quickly. Complex methods like machine learning are accurate but slow and resource-heavy. So despite their high accuracy, we did not use them.
