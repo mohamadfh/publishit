@@ -16,5 +16,5 @@ jobs:
       # Step 2: Build Docker image
       - name: Build Docker image
         run: |
-            cd publishit_api
-            docker build .
+          docker compose up -d --build
+          docker compose down
