@@ -2,13 +2,6 @@
 
 This app is designed to manage articles and allow users to rate them. Users can create articles with a title and text, and other users can give ratings (between 1 and 5) 
 to these articles. The app stores the users, articles, and ratings in a database, and for each article, it calculates the average rating and the total number of ratings.
-Here’s a well-structured `README.md` for your Django project with Docker Compose setup, explanation of endpoints, and instructions for running the API:
-
----
-
-# Django API with Docker and Swagger
-
-This project is a Django-based API with token-based authentication, Swagger documentation, and Docker support. The API includes endpoints for managing articles, rating articles, and user registration.
 
 ## Prerequisites
 
