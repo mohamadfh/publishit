@@ -2,6 +2,48 @@
 
 This app is designed to manage articles and allow users to rate them. Users can create articles with a title and text, and other users can give ratings (between 1 and 5) 
 to these articles. The app stores the users, articles, and ratings in a database, and for each article, it calculates the average rating and the total number of ratings.
+Here’s a well-structured `README.md` for your Django project with Docker Compose setup, explanation of endpoints, and instructions for running the API:
+
+---
+
+# Django API with Docker and Swagger
+
+This project is a Django-based API with token-based authentication, Swagger documentation, and Docker support. The API includes endpoints for managing articles, rating articles, and user registration.
+
+## Prerequisites
+
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+## Getting Started
+
+To get the project running, clone this repository and follow the instructions below.
+
+### Build and Run the Application with Docker Compose
+
+You can build and run the application using Docker Compose:
+
+```bash
+docker-compose up -d --build
+```
+
+This command will:
+- Build the Docker images for the project.
+- Start the containers in detached mode.
+
+### 3. Access the Application
+
+- **Swagger Documentation**: Visit the Swagger UI at [http://localhost:8000/swagger/](http://localhost:8000/swagger/).
+- **Redoc Documentation**: Visit Redoc at [http://localhost:8000/redoc/](http://localhost:8000/redoc/).
+- **Admin Panel**: Visit the Django admin panel at [http://localhost:8000/admin/](http://localhost:8000/admin/) (you will need to create a superuser).
+
+### 4. Stopping the Containers
+
+To stop the running containers, use:
+
+```bash
+docker-compose down
+```
 
 ## Regarding Scalibility
 
