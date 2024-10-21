@@ -55,7 +55,7 @@ class RatingSerializer(serializers.ModelSerializer):
         )
 
         # Recalculate the article's average rating and rating count
-        self.update_article_rating(article)
+        # self.update_article_rating(article)
 
         return rating
 

@@ -21,10 +21,10 @@ class RatingAPIView(APIView):
         """
         Create or update the rating for a specific article.
         """
-        # try:
-        article = Article.objects.get(pk=pk)
-        # except Article.DoesNotExist:
-        #     raise Http404("Article not found.")
+        try:
+            article = Article.objects.get(pk=pk)
+        except Article.DoesNotExist:
+            raise Http404("Article not found.")
 
         data = {'article': article.id, 'rating': request.data.get('rating')}
         serializer = RatingSerializer(data=data, context={'request': request})
