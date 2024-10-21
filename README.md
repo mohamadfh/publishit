@@ -26,9 +26,9 @@ This command will:
 
 ### 3. Access the Application
 
-- **Swagger Documentation**: Visit the Swagger UI at [http://localhost:8000/swagger/](http://localhost/swagger/).
-- **Redoc Documentation**: Visit Redoc at [http://localhost:8000/redoc/](http://localhost/redoc/).
-- **Admin Panel**: Visit the Django admin panel at [http://localhost:8000/admin/](http://localhost/admin/) (you will need to create a superuser).
+- **Swagger Documentation**: Visit the Swagger UI at [http://localhost/swagger/](http://localhost/swagger/).
+- **Redoc Documentation**: Visit Redoc at [http://localhost/redoc/](http://localhost/redoc/).
+- **Admin Panel**: Visit the Django admin panel at [http://localhost/admin/](http://localhost/admin/) (you will need to create a superuser).
 
 ### 4. Stopping the Containers
 
