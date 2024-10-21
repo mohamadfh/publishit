@@ -106,6 +106,16 @@ To update the average_rating and rating_count fields at intervals instead of eac
 
 ## Regarding Fake Rating Detection
 
+The idea is to process ratings in time intervals and to update the average rating by incorporating the new interval's data while adjusting for significant differences in average and standard deviation. We'll ensure that:
+
+- **Large differences in average and standard deviation between the new interval and previous data decrease the weight of the new interval.**
+- **A higher number of ratings in the new interval increases its weight.**
+
+---
+
+![result formula proof](https://github.com/mohamadfh/publishit/blob/main/reports/formula.jpg?raw=true)
+
+---
 ### other possible approaches
 
 #### median
@@ -119,3 +129,7 @@ For **Z-score filtering**, calculate the mean and standard deviation of the rati
 #### machine learning methods for anomaly detection 
 
 Performance is key for our system because we need to handle many ratings quickly. Complex methods like machine learning are accurate but slow and resource-heavy. So despite their high accuracy, we did not use them.
+
+#### give user's ratings weights based on their previous activity
+
+this was actually a great solution but it's implementation complexity is beyond the scope of this project.

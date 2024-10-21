@@ -141,3 +141,17 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://127.0.0.1:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://127.0.0.1:6379/0")
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+CELERY_BEAT_SCHEDULE = {
+    'example-task': {
+        'task': 'core.tasks.update_article_ratings',
+        'schedule': 21600.0,  # every 6 hours
+    },
+}

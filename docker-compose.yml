@@ -11,7 +11,8 @@ services:
       - static_volume:/usr/src/app/staticfiles
     depends_on:
       - db
-
+      - redis
+      - celery_worker
   db:
     image: postgres:latest
     volumes:
@@ -28,6 +29,32 @@ services:
       - static_volume:/staticfiles
     depends_on:
       - web
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  celery_worker:
+    build: ./publishit_api
+    command: celery -A config worker --loglevel=info
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - ./.env.sample
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+
+  celery_beat:
+    build: ./publishit_api
+    command: celery -A config beat --loglevel=info
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - ./.env.sample
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+  
 volumes:
   postgres_data:
   static_volume:
